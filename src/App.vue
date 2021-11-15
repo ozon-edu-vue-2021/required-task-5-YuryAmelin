@@ -1,14 +1,29 @@
 <template>
   <div id="app">
+    <nav>
+      <router-link to="/"
+        ><button class="navButton">Товары</button></router-link
+      >
+      <router-link to="/favorites"
+        ><button class="navButton">Избранное</button></router-link
+      >
+      <router-link to="/shoppingCart"
+        ><button class="navButton">Корзина</button></router-link
+      >
+    </nav>
+    <keep-alive>
+      <router-view></router-view>
+    </keep-alive>
   </div>
 </template>
 
 <script>
-
 export default {
   name: "App",
-  components: {
-    Form,
+  components: {},
+
+  created() {
+    this.$store.dispatch("loadProducts");
   },
 };
 </script>
