@@ -15,6 +15,7 @@
 </template>
 
 <script>
+import { mapMutations } from "vuex";
 export default {
   name: "AppCartItem.vue",
   props: {
@@ -42,14 +43,15 @@ export default {
     this.amount = this.quantity;
   },
   methods: {
+    ...mapMutations(["updateSum", "removeProductFromCart"]),
     updateQuantity() {
-      this.$store.commit("updateQuantity", {
+      this.updateSum({
         id: this.id,
         quantity: this.amount,
       });
     },
     remove() {
-      this.$store.commit("removeProductFromCart", this.id);
+      this.removeProductFromCart(this.id);
     },
   },
   computed: {

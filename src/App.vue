@@ -1,15 +1,9 @@
 <template>
   <div id="app">
     <nav>
-      <router-link to="/"
-        ><button class="navButton">Товары</button></router-link
-      >
-      <router-link to="/favorites"
-        ><button class="navButton">Избранное</button></router-link
-      >
-      <router-link to="/shoppingCart"
-        ><button class="navButton">Корзина</button></router-link
-      >
+      <router-link v-for="route in menu" :key="route.name" :to="route.path">
+        <button class="navButton">{{ route.name }}</button>
+      </router-link>
     </nav>
     <keep-alive>
       <router-view></router-view>
@@ -18,12 +12,22 @@
 </template>
 
 <script>
+import { routes } from "@/router/routes";
+import { mapActions } from "vuex";
+
 export default {
   name: "App",
   components: {},
-
+  methods: {
+    ...mapActions(["loadProducts"]),
+  },
   created() {
-    this.$store.dispatch("loadProducts");
+    this.loadProducts();
+  },
+  computed: {
+    menu() {
+      return routes;
+    },
   },
 };
 </script>

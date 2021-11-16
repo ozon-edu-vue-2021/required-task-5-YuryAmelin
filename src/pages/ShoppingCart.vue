@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper" v-if="this.$store.state.shoppingCart.length">
-    <app-cart-item
+    <cart-item
       v-for="item in cartItems"
       :key="item.id"
       :id="item.id"
@@ -8,7 +8,7 @@
       :dish="item.dish"
       :quantity="item.quantity"
     >
-    </app-cart-item>
+    </cart-item>
     <h2>Общая стоимость покупок: {{ fullPrice }} Руб.</h2>
     <button @click="makeOrder">Оформить</button>
   </div>
@@ -18,11 +18,12 @@
 </template>
 
 <script>
-import AppCartItem from "@/components/AppCartItem";
+import CartItem from "@/components/CartItem";
+import { mapState, mapGetters } from "vuex";
 export default {
   name: "ShoppingCart.vue",
   components: {
-    AppCartItem,
+    CartItem,
   },
   methods: {
     makeOrder() {
@@ -30,14 +31,16 @@ export default {
     },
   },
   computed: {
+    ...mapState(["shoppingCart"]),
+    ...mapGetters(["calculateFullPrice", "getOrder"]),
     cartItems() {
-      return this.$store.state.shoppingCart;
+      return this.shoppingCart;
     },
     fullPrice() {
-      return this.$store.getters.calculateFullPrice;
+      return this.calculateFullPrice;
     },
     order() {
-      return this.$store.getters.getOrder;
+      return this.getOrder;
     },
   },
 };

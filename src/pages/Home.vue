@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper">
     <div class="products">
-      <app-product-card
+      <product-card
         v-for="item in products"
         :key="item.id"
         :id="item.id"
@@ -10,23 +10,20 @@
         :description="item.description"
         :imageNumber="item.img"
       >
-      </app-product-card>
+      </product-card>
     </div>
   </div>
 </template>
 
 <script>
-import AppProductCard from "@/components/AppProductCard";
+import ProductCard from "@/components/ProductCard";
+import { mapState } from "vuex";
 export default {
   name: "Home",
   components: {
-    AppProductCard,
+    ProductCard,
   },
-  computed: {
-    products() {
-      return this.$store.state.products;
-    },
-  },
+  computed: mapState(["products"]),
 };
 </script>
 

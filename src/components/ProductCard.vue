@@ -20,17 +20,14 @@
         >
           {{ isInCart ? "Товар в корзине" : "В корзину" }}
         </button>
-        <img
-          src="../assets/images/star.png"
-          class="favorite"
-          @click="toFavorite"
-        />
+        <button class="favorite" @click="toFavorite">В избр.</button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { mapState, mapMutations } from "vuex";
 export default {
   name: "AppProductCard.vue",
   props: {
@@ -60,9 +57,10 @@ export default {
     quantity: "1",
   }),
   methods: {
+    ...mapMutations(["addProductToCart", "toggleFavorite"]),
     toCart() {
       this.toggle = true;
-      this.$store.commit("addProductToCart", {
+      this.addProductToCart({
         id: this.id,
         price: this.price,
         dish: this.dish,
@@ -70,15 +68,16 @@ export default {
       });
     },
     toFavorite() {
-      this.$store.commit("toggleFavorite", this.id);
+      this.toggleFavorite(this.id);
     },
   },
   computed: {
+    ...mapState(["shoppingCart"]),
     quantityError() {
       return this.quantity <= 0;
     },
     isInCart() {
-      return this.$store.state.shoppingCart.find((el) => el.id === this.id);
+      return this.shoppingCart.find((el) => el.id === this.id);
     },
   },
 };

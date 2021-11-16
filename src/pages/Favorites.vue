@@ -2,8 +2,8 @@
   <div class="wrapper">
     <h1>Избранные товары</h1>
     <div class="products">
-      <app-product-card
-        v-for="item in favoriteProducts"
+      <product-card
+        v-for="item in getFavorites"
         :key="item.uid"
         :id="item.id"
         :dish="item.dish"
@@ -11,22 +11,21 @@
         :description="item.description"
         :imageNumber="item.img"
       >
-      </app-product-card>
+      </product-card>
     </div>
   </div>
 </template>
 
 <script>
-import AppProductCard from "@/components/AppProductCard";
+import ProductCard from "@/components/ProductCard";
+import { mapGetters } from "vuex";
 export default {
   name: "Favorites",
   components: {
-    AppProductCard,
+    ProductCard,
   },
   computed: {
-    favoriteProducts() {
-      return this.$store.getters.getFavorites;
-    },
+    ...mapGetters(["getFavorites"]),
   },
 };
 </script>
