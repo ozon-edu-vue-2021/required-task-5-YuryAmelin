@@ -1,10 +1,12 @@
+import { SET_PRODUCTS } from "@/store/mutation-types";
+
 export const mutations = {
-  setProducts: (state, payload) => {
-    state.products = payload;
-    state.products.map((el) => {
+  [SET_PRODUCTS](state, payload) {
+    state.products = payload.map((el) => {
       el.price = Math.floor(Math.random() * 1000 + 200);
       el.img = Math.round(Math.random() * 11);
       el.favorite = false;
+      return el;
     });
   },
   addProductToCart: (state, payload) => {

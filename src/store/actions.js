@@ -1,3 +1,5 @@
+import { SET_PRODUCTS } from "@/store/mutation-types";
+
 export const actions = {
   async loadProducts({ commit }) {
     let response = await fetch(
@@ -5,7 +7,7 @@ export const actions = {
     );
     if (response.ok) {
       response = await response.json();
-      commit("setProducts", response);
+      commit(SET_PRODUCTS, response);
     }
   },
 };
