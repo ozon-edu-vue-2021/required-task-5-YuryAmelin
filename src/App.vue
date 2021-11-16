@@ -1,14 +1,33 @@
 <template>
   <div id="app">
+    <nav>
+      <router-link v-for="route in menu" :key="route.name" :to="route.path">
+        <button class="navButton">{{ route.name }}</button>
+      </router-link>
+    </nav>
+    <keep-alive>
+      <router-view></router-view>
+    </keep-alive>
   </div>
 </template>
 
 <script>
+import { routes } from "@/router/routes";
+import { mapActions } from "vuex";
 
 export default {
   name: "App",
-  components: {
-    Form,
+  components: {},
+  methods: {
+    ...mapActions(["loadProducts"]),
+  },
+  created() {
+    this.loadProducts();
+  },
+  computed: {
+    menu() {
+      return routes;
+    },
   },
 };
 </script>
